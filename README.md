@@ -4,5 +4,7 @@ A consumer can only consumer if there is some item in buffer and a producer can 
 The program is multi-threaded. There are a finite number of producers and finite number of consumers. 
 
 To run the above program in terminal:
+
 -g++ filename.cpp -pthread for compiling
+
 -./a.out for execution of program
