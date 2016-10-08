@@ -3,6 +3,6 @@ The producer-consumer problem is one of the classical examples of synchronizatio
 
 <b>Compiling the program:</b> g++ filename.cpp -pthread
 
-<b>Running the program:</b> ./a.out number_of_producers number_of consumers
+<b>Running the program:</b> ./a.out number_of_producers number_of consumers maximum_buffer_size
 
 
