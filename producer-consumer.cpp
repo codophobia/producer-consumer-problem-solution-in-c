@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <queue>
 #include <map>
+#include <cstring>
+#include <cstdlib>
 using namespace std;
 sem_t empty;
 sem_t full;
@@ -21,7 +23,7 @@ void *producer(void *a)
         cout<<cnt<<" item produced by producer "<<mp[pthread_self()]<<endl;
         pthread_mutex_unlock(&mutex);
         sem_post(&full);
-        sleep(1);
+        sleep(3);
     }
 }
 void *consumer(void *a)
@@ -33,26 +35,41 @@ void *consumer(void *a)
         q.pop();
         pthread_mutex_unlock(&mutex);
         sem_post(&empty);
-        sleep(1);
+        sleep(3);
     }
 }
-int main()
+int main(int argc,char *argv[])
 {   
-    pthread_t p[5];
-    pthread_t c[5];
-    sem_init(&empty,0,5);
-    sem_init(&full,0,0);
+    if(argc < 4) {
+        cout<<"not enough arguments"<<endl;
+        exit(1);
+    }
+    int pno;
+    int cno;
+    int buffersize;
     int i;
+
+    pno = atoi(argv[1]);
+    cno = atoi(argv[2]);
+    buffersize = atoi(argv[3]);
+    pthread_t p[pno];
+    pthread_t c[cno];
+    sem_init(&empty,0,buffersize);
+    sem_init(&full,0,0);
     pthread_mutex_lock(&mutex);
-    for(i = 0; i < 5; i++) {
+    for(i = 0; i < pno; i++) {
         pthread_create(&p[i],NULL,producer,NULL);
-        pthread_create(&c[i],NULL,consumer,NULL);
-        mc[c[i]] = i+1;
         mp[p[i]] = i+1; 
     }
+    for(i = 0; i < cno; i++) {
+        pthread_create(&c[i],NULL,consumer,NULL);
+        mc[c[i]] = i+1;
+    }
     pthread_mutex_unlock(&mutex);
-    for(i = 0; i < 5; i++) {
+    for(i = 0; i < pno; i++) {
         pthread_join(p[i],NULL);
+    }
+    for(i = 0; i < cno; i++) {
         pthread_join(c[i],NULL);
     }
 }
