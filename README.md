@@ -1,8 +1,7 @@
-# Multi Prodcuer-Consumer Problem Simulation
-The producer-consumer problem is one of the classical examples of synchronization. This program simulates a multi producer-consumer problem in C++(althrough most part is c).
+# Multi Prodcuer-Consumer Problem Solution Using Semaphore and Mutex
+The producer-consumer problem is one of the classical examples of synchronization. This program simulates a multi producer-consumer problem in C.
 
-<b>Compiling the program:</b> g++ filename.cpp -pthread
+<b>Compiling the program:</b> gcc producer-consumer.c -pthread
 
-<b>Running the program:</b> ./a.out number_of_producers number_of consumers maximum_buffer_size
-
+<b>Running the program:</b> ./a.out
 
