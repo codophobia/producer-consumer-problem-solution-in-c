@@ -5,3 +5,6 @@ The producer-consumer problem is one of the classical examples of synchronizatio
 
 <b>Running the program:</b> ./a.out
 
+**Output**
+
+![output](output.png)

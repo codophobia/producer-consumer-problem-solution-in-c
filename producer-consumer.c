@@ -1,10 +1,15 @@
 #include <pthread.h>
 #include <semaphore.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
 
-#define MaxItems 5
-#define BufferSize 5
+/*
+This program provides a possible solution for producer-consumer problem using mutex and semaphore.
+I have used 5 producers and 5 consumers to demonstrate the solution. You can always play with these values.
+*/
+
+#define MaxItems 5 // Maximum items a producer can produce or a consumer can consume
+#define BufferSize 5 // Size of the buffer
 
 sem_t empty;
 sem_t full;
@@ -17,7 +22,7 @@ void *producer(void *pno)
 {   
     int item;
     for(int i = 0; i < MaxItems; i++) {
-        item = rand();
+        item = rand(); // Produce an random item
         sem_wait(&empty);
         pthread_mutex_lock(&mutex);
         buffer[in] = item;
@@ -48,7 +53,7 @@ int main()
     sem_init(&empty,0,BufferSize);
     sem_init(&full,0,0);
 
-    int a[5] = {1,2,3,4,5};
+    int a[5] = {1,2,3,4,5}; //Just used for numbering the producer and consumer
 
     for(int i = 0; i < 5; i++) {
         pthread_create(&pro[i], NULL, (void *)producer, (void *)&a[i]);
